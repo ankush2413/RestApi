@@ -1,7 +1,22 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.exceptions import AuthenticationFailed
+from django.contrib.auth.models import User
 
 User = get_user_model()
+
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        username = attrs.get("username")
+        user_qs = User.objects.filter(username=username)
+
+        if not user_qs.exists():
+            raise AuthenticationFailed("User does not exist in the system")
+
+        return super().validate(attrs)
 
 class UserProductInlineSerializer(serializers.Serializer):
     url = serializers.HyperlinkedIdentityField(

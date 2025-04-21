@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,13 +61,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'cfehome.urls'
 CORS_URLS_REGEX = r"^/api/.*"
-CORS_ALLOWED_ORIGINS = []
+# CORS_ALLOWED_ORIGINS = []
 
-if DEBUG:
-    CORS_ALLOWED_ORIGINS += [
-        'http://localhost:8111',
-        'https://localhost:8111',
-    ]
+# if DEBUG:
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'https://localhost:5173',
+]
 
 TEMPLATES = [
     {
